@@ -1,0 +1,370 @@
+openapi: 3.0.0
+
+info:
+  title: Airbnb Clone API
+  description: API quản lý phòng, người dùng và đặt phòng
+  version: 1.0.0
+
+servers:
+  - url: https://airbnbnew.cybersoft.edu.vn/api
+
+tags:
+  - name: Auth
+  - name: Users
+  - name: Rooms
+  - name: Booking
+
+
+paths:
+  /auth/signin:
+    post:
+      tags:
+        - Auth
+      summary: Đăng nhập
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SigninRequest'
+
+      responses:
+        '200':
+          description: Đăng nhập thành công
+          
+  
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Đăng ký
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupRequest'
+
+      responses:
+        '200':
+          description: Đăng ký thành công
+         
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Lấy danh sách người dùng
+
+      responses:
+        '200':
+          description: Thành công
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+    post:
+      tags:
+        - Users
+      summary: Thêm người dùng
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+
+      responses:
+        '201':
+          description: Tạo thành công
+
+  /rooms:
+    get:
+      tags:
+        - Rooms
+      summary: Lấy danh sách phòng
+
+      responses:
+        '200':
+          description: Thành công
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+
+    post:
+      tags:
+        - Rooms
+      summary: Thêm phòng mới
+
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoom'
+
+      responses:
+        '201':
+          description: Tạo phòng thành công
+
+  /rooms/{id}:
+    get:
+      tags:
+        - Rooms
+      summary: Lấy chi tiết phòng
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Thành công
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+
+    put:
+      tags:
+        - Rooms
+      summary: Cập nhật phòng
+
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRoom'
+
+      responses:
+        '200':
+          description: Cập nhật thành công
+
+    delete:
+      tags:
+        - Rooms
+      summary: Xóa phòng
+
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+
+      responses:
+        '200':
+          description: Xóa thành công
+
+  /booking:
+    post:
+      tags:
+        - Booking
+      summary: Đặt phòng
+
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookingRequest'
+
+      responses:
+        '201':
+          description: Đặt phòng thành công
+
+components:
+  parameters:
+    TokenCybersoft:
+      name: tokenCybersoft
+      in: header
+      required: true
+      description: Nhập token cybersoft
+      schema:
+            type: string
+            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA5MSIsIkhldEhhblN0cmluZyI6IjAyLzA5LzIwMjYiLCJIZXRIYW5UaW1lIjoiMTc4ODMwNzIwMDAwMCIsIm5iZiI6MTc1OTk0MjgwMCwiZXhwIjoxNzg4NDU0ODAwfQ.3f2gLYDZla_lDH4GWmfgSe9Il_QHrpoHIWhW6FSKTi8
+            
+  securitySchemes:      
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    SigninRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          example: khanguyenh10dev@gmail.com  
+        password:
+          type: string
+          example: ITKha257
+
+    SignupRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+        birthday:
+          type: string
+        gender:
+          type: boolean
+        avatar:
+          type: string
+        role:
+          type: string
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        avatar:
+          type: string
+
+    CreateUser:
+      type: object
+      required:
+        - name
+        - email
+        - password
+
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phone:
+          type: string
+
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+        tenPhong:
+          type: string
+        khach:
+          type: integer
+        phongNgu:
+          type: integer
+        giuong:
+          type: integer
+        phongTam:
+          type: integer
+        moTa:
+          type: string
+        giaTien:
+          type: integer
+        wifi:
+          type: boolean
+        tivi:
+          type: boolean
+        dieuHoa:
+          type: boolean
+        bep:
+          type: boolean
+        doXe:
+          type: boolean
+        hoBoi:
+          type: boolean
+        banLa:
+          type: boolean
+
+    CreateRoom:
+      type: object
+      required:
+        - tenPhong
+        - giaTien
+
+      properties:
+        tenPhong:
+          type: string
+        khach:
+          type: integer
+        phongNgu:
+          type: integer
+        giuong:
+          type: integer
+        phongTam:
+          type: integer
+        moTa:
+          type: string
+        giaTien:
+          type: integer
+        wifi:
+          type: boolean
+        tivi:
+          type: boolean
+        dieuHoa:
+          type: boolean
+        bep:
+          type: boolean
+        doXe:
+          type: boolean
+        hoBoi:
+          type: boolean
+        banLa:
+          type: boolean
+
+    BookingRequest:
+      type: object
+      properties:
+        maPhong:
+          type: integer
+        ngayDen:
+          type: string
+          format: date
+        ngayDi:
+          type: string
+          format: date
+        soLuongKhach:
+          type: integer

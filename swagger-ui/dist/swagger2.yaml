@@ -11,8 +11,10 @@ servers:
 tags:
   - name: Auth
   - name: Users
+  - name: Locations
   - name: Rooms
-  - name: Booking
+  - name: RoomOrders
+  - name: Comments
 
 
 paths:
@@ -33,8 +35,7 @@ paths:
       responses:
         '200':
           description: Đăng nhập thành công
-          
-  
+      
   /auth/signup:
     post:
       tags:
@@ -52,162 +53,584 @@ paths:
       responses:
         '200':
           description: Đăng ký thành công
-         
+
+
+
   /users:
     get:
       tags:
         - Users
       summary: Lấy danh sách người dùng
-
+      parameters: 
+        - $ref: '#/components/parameters/TokenCybersoft'
       responses:
         '200':
           description: Thành công
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-
+   
     post:
       tags:
         - Users
       summary: Thêm người dùng
-
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateUser'
+              $ref: '#/components/schemas/User'
 
       responses:
         '201':
           description: Tạo thành công
-
-  /rooms:
-    get:
+   
+  /users/{id}:
+    get:      
       tags:
-        - Rooms
-      summary: Lấy danh sách phòng
-
-      responses:
-        '200':
-          description: Thành công
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Room'
-
-    post:
-      tags:
-        - Rooms
-      summary: Thêm phòng mới
-
-      security:
-        - bearerAuth: []
-
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateRoom'
-
-      responses:
-        '201':
-          description: Tạo phòng thành công
-
-  /rooms/{id}:
-    get:
-      tags:
-        - Rooms
-      summary: Lấy chi tiết phòng
-
+        - Users
+      summary: Lấy chi tiết người dùng
       parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
         - in: path
           name: id
           required: true
           schema:
             type: integer
-
       responses:
         '200':
           description: Thành công
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Room'
-
+    
     put:
       tags:
-        - Rooms
-      summary: Cập nhật phòng
-
-      security:
-        - bearerAuth: []
-
+        - Users
+      summary: Cập nhật người dùng
       parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
         - in: path
           name: id
           required: true
           schema:
             type: integer
-
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateRoom'
-
+              $ref: '#/components/schemas/User'
       responses:
         '200':
           description: Cập nhật thành công
-
+    
     delete:
       tags:
-        - Rooms
-      summary: Xóa phòng
-
-      security:
-        - bearerAuth: []
-
+        - Users
+      summary: Xóa người dùng
       parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
         - in: path
           name: id
           required: true
           schema:
             type: integer
-
       responses:
         '200':
-          description: Xóa thành công
-
-  /booking:
+          description: Xóa người dùng thành công
+  
+  /users/phan-trang-tim-kiem:
+     get:
+      tags: 
+        - Users
+      summary: Lấy danh sách người dùng theo phân trang tìm kiếm
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - $ref: '#/components/parameters/PageIndex'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Keyword'
+      responses:
+        '200':
+          description: Thành công
+  
+  /users/search/{name}:
+     get:
+      tags: 
+        - Users
+      summary: Lấy danh sách người dùng theo tên
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Thành công
+   
+  /users/upload-avatar:
     post:
       tags:
-        - Booking
-      summary: Đặt phòng
+        - Users
+      summary: Upload avatar
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+      requestBody:
+        $ref: '#/components/requestBodies/FormFile'
+      responses:
+        '200':
+          description: Thành cong
+          
 
-      security:
-        - bearerAuth: []
-
+  /vi-tri:
+    get:
+      tags:
+        - Locations
+      summary: Lấy danh sách vị trí
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+      responses:
+        '200':
+          description: Thành công
+    post:
+      tags:
+        - Locations
+      summary: Thêm vị trí
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BookingRequest'
-
+              $ref: '#/components/schemas/Location'
       responses:
         '201':
-          description: Đặt phòng thành công
+          description: Tạo vị trí thành công
+  
+  /vi-tri/{id}:
+    get:
+      tags:
+        - Locations
+      summary: Lấy chi tiết vị trí
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Thành công
+  
+    put:
+      tags:
+        - Locations
+      summary: Cập nhật vị trí
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+      responses:
+        '200':
+          description: Cập nhật vị trí thành công
+  
+    delete:
+      tags:
+        - Locations
+      summary: Xóa vị trí
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Xóa vị trí thành công
+
+  /vi-tri/phan-trang-tim-kiem:
+     get:
+      tags: 
+        - Locations
+      summary: Lấy danh sách vị trí theo phân trang tìm kiếm
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - $ref: '#/components/parameters/PageIndex'
+        - $ref: '#/components/parameters/PageSize'    
+        - $ref: '#/components/parameters/Keyword'
+      responses:
+        '200':
+          description: Thành công
+  
+  /vi-tri/upload-hinh-vitri:
+    post:
+      tags:
+        - Locations
+      summary: Upload hình vị trí
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: query
+          name: maViTri
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        $ref: '#/components/requestBodies/FormFile'
+      responses:
+        '200':
+          description: Upload Thành công
+      
+ 
+  /phong-thue:
+    get:
+      tags:
+        - Rooms
+      summary: Lấy danh sách phòng thuê
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+      responses:
+        '200':
+          description: Thành công
+    post:
+      tags:
+        - Rooms
+      summary: Thêm phòng thuê
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      responses:
+        '201':
+          description: Tạo phòng thuê thành công
+  
+  /phong-thue/{id}:
+    get:
+      tags:
+        - Rooms
+      summary: Lấy chi tiết phòng thuê
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Thành công
+  
+    put:
+      tags:
+        - Rooms
+      summary: Cập nhật phòng thuê
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      responses:
+        '200':
+          description: Cập nhật phòng thuê thành công
+  
+    delete:
+      tags:
+        - Rooms
+      summary: Xóa phòng thuê
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Xóa phòng thuê thành công
+  
+  /phong-thue/phan-trang-tim-kiem:
+     get:
+      tags: 
+        - Rooms
+      summary: Lấy danh sách phòng thuê theo phân trang tìm kiếm
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - $ref: '#/components/parameters/PageIndex'
+        - $ref: '#/components/parameters/PageSize'
+        - $ref: '#/components/parameters/Keyword'
+      responses:
+        '200':
+          description: Thành công
+  
+  /phong-thue/lay-phong-theo-vi-tri:
+     get:
+      tags: 
+        - Rooms
+      summary: Lấy danh sách phòng thuê theo vị trí
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: query
+          name: maViTri
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Thành công
+
+  /phong-thue/upload-hinh-phongthue:
+    post:
+      tags:
+        - Rooms
+      summary: Upload hình phòng thuê
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: query
+          name: maPhong
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/FormFile'
+      responses:
+        '200':
+          description: Upload Thành công
+
+
+  /dat-phong:
+    get:
+      tags:
+        - RoomOrders
+      summary: Lấy danh sách đặt phòng
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+      responses:
+        '200':
+          description: Thành công
+    post:
+      tags:
+        - RoomOrders
+      summary: Thêm đặt phòng
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomOrder'
+      responses:
+        '201':
+          description: Tạo đặt phòng thành công
+  
+  /dat-phong/{id}:
+    get:
+      tags:
+        - RoomOrders
+      summary: Lấy chi tiết đặt phòng
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Thành công
+    
+    put:
+      tags:
+        - RoomOrders
+      summary: Cập nhật đặt phòng
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RoomOrder'
+      responses:
+        '200':
+          description: Cập nhật đặt phòng thành công
+    
+    delete:
+      tags:
+        - RoomOrders
+      summary: Xóa đặt phòng
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Xóa đặt phòng thành công
+  
+  /dat-phong/lay-theo-nguoi-dung/{MaNguoiDung}:
+     get:
+      tags: 
+        - RoomOrders
+      summary: Lấy danh sách đặt phòng theo người dùng
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: MaNguoiDung
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Thành công
+  
+  /binh-luan:
+    get:
+      tags:
+        - Comments
+      summary: Lấy danh sách bình luận
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+      responses:
+        '200':
+          description: Thành công
+    post:
+      tags:
+        - Comments
+      summary: Thêm bình luận
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '201':
+          description: Tạo bình luan thành cong
+  
+  /binh-luan/{id}:
+    get:
+      tags:
+        - Comments
+      summary: Lấy chi tiết bình luan
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Thành công
+    
+    put:
+      tags:
+        - Comments
+      summary: Cập nhật bình luận
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+      responses:
+        '200':
+          description: Cập nhật bình luận thành công
+    
+    delete:
+      tags:
+        - Comments
+      summary: Xóa bình luận
+      parameters:
+        - $ref: '#/components/parameters/Token'
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Xóa bình luận thành công
+  
+  /binh-luan/lay-binh-luan-theo-phong/{maPhong}:
+    get:
+      tags:
+        - Comments
+      summary: Lấy danh sách bình luận theo mã phòng
+      parameters:
+        - $ref: '#/components/parameters/TokenCybersoft'
+        - in: path
+          name: maPhong
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Thành công
 
 components:
   parameters:
+    Token:
+      name: token
+      in: header
+      required: true
+      description: Nhập token
+      schema:
+        type: string
     TokenCybersoft:
       name: tokenCybersoft
       in: header
@@ -216,12 +639,52 @@ components:
       schema:
             type: string
             example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA5MSIsIkhldEhhblN0cmluZyI6IjAyLzA5LzIwMjYiLCJIZXRIYW5UaW1lIjoiMTc4ODMwNzIwMDAwMCIsIm5iZiI6MTc1OTk0MjgwMCwiZXhwIjoxNzg4NDU0ODAwfQ.3f2gLYDZla_lDH4GWmfgSe9Il_QHrpoHIWhW6FSKTi8
-            
-  securitySchemes:      
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+    PageIndex:
+      name: pageIndex
+      in: query
+      required: true
+      description: Trang
+      schema:
+        type: integer
+        example: 1
+    PageSize:
+      name: pageSize
+      in: query
+      required: true
+      description: Số lần phân trang
+      schema:
+        type: integer
+        example: 10
+    Keyword:
+      name: keyword
+      in: query
+      required: false
+      description: Tìm kiếm
+      schema:
+        type: string
+        example: ''
+   
+
+  # securitySchemes:      
+  #   bearerAuth:
+  #     type: http
+  #     scheme: bearer
+  #     bearerFormat: JWT
+
+
+
+  
+  requestBodies:
+    FormFile:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              formFile:
+                type: string
+                format: binary
 
   schemas:
     SigninRequest:
@@ -265,26 +728,31 @@ components:
           type: string
         email:
           type: string
-        avatar:
-          type: string
-
-    CreateUser:
-      type: object
-      required:
-        - name
-        - email
-        - password
-
-      properties:
-        name:
-          type: string
-        email:
-          type: string
         password:
           type: string
         phone:
           type: string
+        birthday:
+          type: string
+        gender:
+          type: boolean
+        avatar:
+          type: string
 
+    Location:
+       type: object
+       properties:
+        id:
+          type: integer
+        tenViTri:
+          type: string
+        tinhThanh: 
+          type: string
+        quocGia:
+          type: string
+        hinhAnh:
+          type: string
+    
     Room:
       type: object
       properties:
@@ -304,11 +772,15 @@ components:
           type: string
         giaTien:
           type: integer
-        wifi:
+        mayGiat:
+          type: boolean
+        banLa:
           type: boolean
         tivi:
           type: boolean
         dieuHoa:
+          type: boolean
+        wifi:
           type: boolean
         bep:
           type: boolean
@@ -316,48 +788,18 @@ components:
           type: boolean
         hoBoi:
           type: boolean
-        banLa:
+        banUi:
           type: boolean
-
-    CreateRoom:
-      type: object
-      required:
-        - tenPhong
-        - giaTien
-
-      properties:
-        tenPhong:
+        maViTri:
+          type: integer
+        hinhAnh:
           type: string
-        khach:
-          type: integer
-        phongNgu:
-          type: integer
-        giuong:
-          type: integer
-        phongTam:
-          type: integer
-        moTa:
-          type: string
-        giaTien:
-          type: integer
-        wifi:
-          type: boolean
-        tivi:
-          type: boolean
-        dieuHoa:
-          type: boolean
-        bep:
-          type: boolean
-        doXe:
-          type: boolean
-        hoBoi:
-          type: boolean
-        banLa:
-          type: boolean
 
-    BookingRequest:
+    RoomOrder:
       type: object
       properties:
+        id:
+          type: integer
         maPhong:
           type: integer
         ngayDen:
@@ -367,4 +809,22 @@ components:
           type: string
           format: date
         soLuongKhach:
+          type: integer
+        maNguoiDung:
+          type: integer
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        maPhong:
+          type: integer
+        maNguoiBinhLuan:
+          type: integer
+        ngayBinhLuan:
+          type: string
+        noiDung:
+          type: string
+        saoBinhLuan:
           type: integer

@@ -1,66 +1,46 @@
 const fs = require('fs');
-const getList = () => {
+const { Student } = require('../model');
+const { get } = require('http');
+const { where } = require('sequelize');
+
+
+const getList = async () => {
     // đọc dữ liệu từ file students.json
-    const data = fs.readFileSync('students.json');
-    const students = JSON.parse(data);
+    const students = await Student.findAll(); // lấy tất cả sinh viên từ database
     if (students) {
         return students;
     }
     return false;
 }
-const getDetailById = (id) => {
-    const students = getList();
-    if (!students) {
-        return false;
-    }
-    const student = students.find(student => student.id == id);
+const getDetailById = async (id) => {
+    const student = await Student.findOne({ where: { id } }); // lấy sinh viên theo id từ database
     if (student) {
         return student;
     } else {
         return false;
     }
 }
-const create = (student) => {
-    const newStudent = {
-        id: Math.random(),
-        ...student
-    }
-    const students = getList();
-    if (!students) {
-        return false;
-    }
-    students.push(newStudent);
-    // Cập nhật file students.json với dữ liệu mới
-    fs.writeFileSync('students.json', JSON.stringify(students));
+const create = async (student) => {
+    const newStudent = await Student.create(student); // tạo instance và lưu vào database
     return newStudent;
 }
-const updateById = (id, student) => {
-    const students = getList();
-    if (!students) {
-        return false;
-    }
-    const studentIndex = students.findIndex(student => student.id == id);
-    if (studentIndex !== -1) {
-        const oldStudent = students[studentIndex];
-        const studentUpdated = { ...oldStudent, ...student };
-        students[studentIndex] = studentUpdated;
-        fs.writeFileSync('students.json', JSON.stringify(students));
+const updateById = async (id, student) => {
+    const studentUpdate = await getDetailById(id);
+    if (studentUpdate) {
+        studentUpdate.fullname = student.fullname;
+        studentUpdate.age = student.age;
+        studentUpdate.grade = student.grade;
+        const studentUpdated = await studentUpdate.save(); // lưu instance vào database
         return studentUpdated;
     } else {
         return false;
     }
 }
-const deleteById = (id) => {
-    const students = getList();
-    if (!students) {
-        return false;
-    }
-    const studentIndex = students.findIndex(student => student.id == id);
-    if (studentIndex !== -1) {
-        const student = students[studentIndex];
-        students.splice(studentIndex, 1);
-        fs.writeFileSync('students.json', JSON.stringify(students));
-        return student;
+const deleteById = async (id) => {
+    const studentDelete = await getDetailById(id);
+    if (studentDelete) {
+        await studentDelete.destroy({ where: { id } }); // xóa instance khỏi database
+        return studentDelete;
     } else {
         return false;
     }

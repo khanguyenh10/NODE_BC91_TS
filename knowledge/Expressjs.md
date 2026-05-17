@@ -38,3 +38,4 @@ npm i express
 ### Middleware
     - Middleware: là func nằm giữa request và response
         - Controller cũng là 1 middleware nhưng ko có tham số next
+

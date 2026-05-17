@@ -15,6 +15,7 @@
 - pass_word phải hash bằng: bcrypt hoặc argon2
 
 # Mối quan hệ giữa các bảng
+Khóa ngoại lun nằm trên bảng nhiều
 Người dùng -> Đặt Phòng (1 - N): 1 user được đặt nhiều phòng
 Phòng -> Đặt Phòng (1 - N): 1 phòng có nhiều lượt đặt
 Người dùng -> Phòng ( N - N): 1 người dùng có nhiều phòng đã đặt, 1 phòng có nhiều người dùng đặt

@@ -39,3 +39,11 @@ const buffer = fs.readFileAsync('filename');
 const data = JSON.parse(buffer);
 
 ```
+
+### yarn so với npm
+- nhanh hơn so với npm
+- script yarn ngắn gọn hơn
+```js
+// 1. set up yarn
+npm i -g yarn
+```

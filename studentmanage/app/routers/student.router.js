@@ -1,7 +1,7 @@
 const express = require('express');
 
 const studentRouter = express.Router();
-const { getStudentList, getStudentDetailById, createStudent, updateStudentById, deleteStudentById, deleteStudent } = require('../controllers/student.controller');
+const { getStudentList, getStudentDetailById, createStudent, updateStudentById, deleteStudentById, deleteStudent } = require('../controllers/student.controllers');
 const { logFeature } = require('../middleware/logger/log-feature');
 const { checkEmpty, checkGrade } = require('../middleware/validations/student.validation');
 

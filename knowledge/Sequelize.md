@@ -57,3 +57,29 @@ module.exports = {
     dialect: 'mysql'
 }
 ```
+
+### Migrate 
+- Chuyên dùng backup những cái bảng
+
+### Seeders
+- Tạo ra dữ liệu giả
+
+
+### Mã hóa password dùng
+- Bcrypt
+```js
+//1. install
+yarn add bcryptjs
+//2. usage
+
+```
+
+### JsonToken - chìa khóa đăng nhập
+```js
+//1. install
+yarn add jsonwebtoken
+```
+
+### Authenticate - Authorize
+- authenticate: xác thực user hợp lệ ko
+- authorize: phân quyền cho user được làm gì

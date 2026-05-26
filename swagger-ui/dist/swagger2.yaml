@@ -5,8 +5,9 @@ info:
   description: API quản lý phòng, người dùng và đặt phòng
   version: 1.0.0
 
+
 servers:
-  - url: https://airbnbnew.cybersoft.edu.vn/api
+  - url: https://airbnbnew.cybersoft.edu.vn/api   # server: [{url: ""}]
 
 tags:
   - name: Auth

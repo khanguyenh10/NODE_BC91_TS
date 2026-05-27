@@ -83,3 +83,9 @@ yarn add jsonwebtoken
 ### Authenticate - Authorize
 - authenticate: xác thực user hợp lệ ko
 - authorize: phân quyền cho user được làm gì
+
+### Upload File
+```js
+//1. setup
+npm i --save multer
+```

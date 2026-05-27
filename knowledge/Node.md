@@ -47,3 +47,6 @@ const data = JSON.parse(buffer);
 // 1. set up yarn
 npm i -g yarn
 ```
+
+## Tra cứu hàm javascript
+- search javascript array  từ file mozzilla

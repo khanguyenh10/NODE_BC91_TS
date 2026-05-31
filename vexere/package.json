@@ -10,7 +10,10 @@
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
+    "express-fingerprint": "^1.2.2",
+    "gravatar-url": "^4.0.2",
     "jsonwebtoken": "^9.0.3",
+    "mkdirp": "^3.0.1",
     "multer": "^2.1.1",
     "mysql2": "^3.22.3",
     "sequelize": "^6.37.8"

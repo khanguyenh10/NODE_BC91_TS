@@ -50,3 +50,53 @@ npm i -g yarn
 
 ## Tra cứu hàm javascript
 - search javascript array  từ file mozzilla
+
+
+
+### Mã hóa password dùng
+- Bcrypt
+```js
+//1. install
+yarn add bcryptjs
+//2. usage
+
+```
+
+### JsonToken - chìa khóa đăng nhập
+```js
+//1. install
+yarn add jsonwebtoken
+```
+
+### Authenticate - Authorize
+- authenticate: xác thực user hợp lệ ko
+- authorize: phân quyền cho user được làm gì
+
+### Upload File
+```js
+//1. setup
+npm i --save multer
+```
+
+### Mkdir
+- hỗ trợ tạo thư mục động khi chưa có
+```js
+//1. setup
+npm i mkdirp
+
+```
+
+### Gravatar ( hỗ trợ tạo avatar default)
+```js
+//1. setup
+npm i gravatar-url
+// 2. usage
+gravatarUrl('email@gmail.com', {size: 200});
+```
+
+
+### Fingerprint ( để biết client dùng hdh nào)
+```js
+// 1. setup
+yarn add express-fingerprint
+```

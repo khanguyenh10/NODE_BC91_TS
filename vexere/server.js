@@ -1,15 +1,20 @@
 const express = require('express');
 const path = require('path');
 const { sequelize } = require('./models');
-
+const Fingerprint = require('express-fingerprint');
 const app = express(); // tạo ứng dụng express
 
 //cài ứng dụng sử dụng kiểu json
 app.use(express.json());
 
+
+
+// cài đặt fingerprint
+app.use(Fingerprint());
+
 // cài đặt static file
 const publicPathDirectory = path.join(__dirname, './public');
-app.use(express.static(publicPathDirectory));
+app.use("/public", express.static(publicPathDirectory));
 
 // // cài đặt router
 const router = require('./routers/index');
@@ -27,3 +32,5 @@ app.listen(port, async () => {
         console.log('Unable to connect to the database:', error);
     }
 })
+
+

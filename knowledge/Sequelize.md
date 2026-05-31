@@ -64,28 +64,8 @@ module.exports = {
 ### Seeders
 - Tạo ra dữ liệu giả
 
-
-### Mã hóa password dùng
-- Bcrypt
+### Cách buộc thêm data vào foreignkey
 ```js
-//1. install
-yarn add bcryptjs
-//2. usage
-
-```
-
-### JsonToken - chìa khóa đăng nhập
-```js
-//1. install
-yarn add jsonwebtoken
-```
-
-### Authenticate - Authorize
-- authenticate: xác thực user hợp lệ ko
-- authorize: phân quyền cho user được làm gì
-
-### Upload File
-```js
-//1. setup
-npm i --save multer
+//1. set mysql
+SET GLOBAL FOREIGN_KEY_CHECKS = 0;
 ```

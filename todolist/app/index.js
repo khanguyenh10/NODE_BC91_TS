@@ -4,6 +4,7 @@ const yargs = require('yargs'); //es5 (commonjs)
 const fs = require("fs"); // file system ( build in nodejs)
 const chalk = require("chalk");
 const { readAllTask, createTask, updateTask, readDetailTask, deleteTask } = require("./model/task");
+const { type } = require('os');
 
 // tạo lệnh test
 // chạy lệnh node app/index.js test
@@ -21,8 +22,10 @@ yargs.command({
     builder: {
         title: {
             type: "string",
-            description: "string",
-        }
+        },
+        description: {
+            type: "string"
+        },
     },
     handler: (agrs) => {
         const { title, description } = agrs;

@@ -1,0 +1,10 @@
+const path = require('path');
+// Đăng ký ts-node ngay trong file cấu hình của Sequelize
+require('ts-node').register();
+
+module.exports = {
+    'config': path.resolve('src', 'config', 'config.js'), // File config db vẫn nên để đuôi .js để CLI đọc dễ dàng
+    'models-path': path.resolve('src', 'models'),
+    'seeders-path': path.resolve('src', 'seeders'),
+    'migrations-path': path.resolve('src', 'migrations')
+};

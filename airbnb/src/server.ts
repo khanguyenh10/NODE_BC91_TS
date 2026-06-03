@@ -1,5 +1,6 @@
 import express from "express";
 import { sequelize } from "./models";
+import router from "./routers";
 
 //1. khởi tạo express js
 const app = express();
@@ -17,3 +18,5 @@ app.listen(port, async () => {
         console.log(error);
     }
 })
+//5. set up router
+app.use("/api/v1", router);

@@ -11,7 +11,7 @@ interface UserAttributes {
 }
 
 // 2. Định nghĩa các thuộc tính khi khởi tạo (id tự tăng nên không bắt buộc truyền vào)
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+interface UserCreationAttributes extends Optional<UserAttributes, 'id'> { }
 
 // 3. Khởi tạo Class Model kế thừa từ Sequelize Model
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {

@@ -3,6 +3,6 @@ import { locationRouter } from "./location.routers";
 
 
 const router = express.Router();
-router.use("vi-tri", locationRouter);
+router.use("/vi-tri", locationRouter);
 
 export default router;

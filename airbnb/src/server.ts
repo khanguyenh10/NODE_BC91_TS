@@ -6,6 +6,8 @@ import router from "./routers";
 const app = express();
 //2. khởi tạo port
 const port = 3000;
+//2.2 parse res to json
+app.use(express.json());
 //3. kiểm tra server thành công chưa
 app.listen(port, async () => {
     console.log(`Server is running port ${3000}`);
@@ -20,3 +22,4 @@ app.listen(port, async () => {
 })
 //5. set up router
 app.use("/api/v1", router);
+

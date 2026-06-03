@@ -3,7 +3,6 @@ import { DataTypes, QueryInterface } from "sequelize"
 export const up = async (queryInterface: QueryInterface) => {
   await queryInterface.createTable('locations', {
     id: {
-      allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
@@ -23,6 +22,14 @@ export const up = async (queryInterface: QueryInterface) => {
     photo: {
       allowNull: false,
       type: DataTypes.STRING
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
     }
   })
 }

@@ -44,6 +44,7 @@ const createStation = async (req, res) => {
     const { name, address, province } = req.body;
     try {
         const newStation = await Station.create({ name, address, province });
+        console.log("newStation", newStation)
         return res.status(201).send(newStation);
     } catch (error) {
         return res.status(500).send(error)

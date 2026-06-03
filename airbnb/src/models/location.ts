@@ -17,22 +17,14 @@ interface LocationCreationAttributes extends Optional<LocationAttributes, "id"> 
 
 
 // 3. Khởi tạo Class Model kế thừa từ Sequelize Model
-class Location extends Model<LocationAttributes, LocationCreationAttributes> implements LocationAttributes {
-    public id!: number;
-    public name!: string;
-    public province!: string;
-    public country!: string;
-    public photo!: string;
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
-}
+class Location extends Model<LocationAttributes, LocationCreationAttributes> { };
+
 // 4. Định nghĩa cấu trúc cột giống như Migration
 Location.init(
     {
         id: {
             allowNull: false,
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
         },

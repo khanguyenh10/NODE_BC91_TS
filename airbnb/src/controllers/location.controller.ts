@@ -1,12 +1,16 @@
+import { toLocationResponseDTo } from './../helper/mapper-helper';
 import { Request, Response } from "express"
-import { LocationReqBody } from "../dto/location.dto"
+import { CreateLocationDTO, LocationResponseDTO, UpdateLocationDTO } from "../dto/location.dto"
 import Location from "../models/location"
-const getLocationList = async (req: Request, res: Response) => {
+import { ApiResponse } from "../dto/api.dto";
+import { ResponseHandler } from "../helper/handler-helper";
+const getLocationList = async (req: Request, res: Response<LocationResponseDTO>) => {
     try {
-        const locations = await Location.findAll();
-        return res.status(200).send(locations);
+        const locations = await Location.findAll({ raw: true });
+        console.log(locations);
+        return ResponseHandler.success(res, locations.map(toLocationResponseDTo), 200);
     } catch (error) {
-        return res.status(500).send(error);
+        return ResponseHandler.error(res, error, 500);
     }
 }
 const getLocationListSearchPagination = () => {
@@ -21,44 +25,53 @@ const getLocationDetailById = async (req: Request<{ id: number }>, res: Response
         return res.status(500).send(error);
     }
 }
-const createLocation = async (req: Request<{}, {}, LocationReqBody>, res: Response) => {
-    const { name, province, country, photo } = req.body;
+const createLocation = async (req: Request<{}, {}, CreateLocationDTO>, res: Response<ApiResponse<LocationResponseDTO>>) => {
+    const { tenViTri = '', tinhThanh = '', quocGia = '', hinhAnh = '' } = req.body;
     try {
         const newLocation = await Location.create({
-            name,
-            province,
-            country,
-            photo
+            name: tenViTri,
+            province: tinhThanh,
+            country: quocGia,
+            photo: hinhAnh
         })
-        return res.status(201).send(newLocation);
+        return ResponseHandler.success(res, toLocationResponseDTo(newLocation), 200);
     } catch (error) {
-        return res.status(500).send(error);
+        return ResponseHandler.error(res, error, 500);
     }
 }
-const updateLocationById = async (req: Request<{ id: number }, {}, LocationReqBody>, res: Response) => {
+const updateLocationById = async (req: Request<{ id: number }, {}, UpdateLocationDTO>, res: Response<ApiResponse<LocationResponseDTO>>) => {
     const { id } = req.params;
-    const { name, province, country, photo } = req.body;
+    const { tenViTri = '', tinhThanh = "", quocGia = "", hinhAnh = "" } = req.body;
     try {
-        const updateLocation = await Location.update({
-            name,
-            province,
-            country,
-            photo
-        }, {
-            where: { id }
-        })
-        return res.status(200).send(updateLocation);
+        const updateLocation = await Location.findOne({ where: { id } })
+        if (updateLocation) {
+            updateLocation.set({
+                name: tenViTri,
+                province: tinhThanh,
+                country: quocGia,
+                photo: hinhAnh
+            })
+            await updateLocation.save();
+            return ResponseHandler.success(res, toLocationResponseDTo(updateLocation), 200);
+        } else {
+            return ResponseHandler.error(res, toLocationResponseDTo(updateLocation), 404, "Not Found");
+        }
+
     } catch (error) {
-        return res.status(500).send(error);
+        return ResponseHandler.error(res, error, 500);
     }
 }
 const deleteLocationById = async (req: Request<{ id: number }>, res: Response) => {
     const { id } = req.params;
     try {
         const deleteLocation = await Location.destroy({ where: { id } });
-        return res.status(200).send(deleteLocation);
+        if (deleteLocation) {
+            return ResponseHandler.success(res, deleteLocation, 200);
+        } else {
+            return ResponseHandler.error(res, deleteLocation, 400);
+        }
     } catch (error) {
-        return res.status(500).send(error);
+        return ResponseHandler.error(res, error, 500);
     }
 }
 

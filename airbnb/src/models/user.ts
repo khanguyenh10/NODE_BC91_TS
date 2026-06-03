@@ -15,19 +15,21 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> { }
 
 // 3. Khởi tạo Class Model kế thừa từ Sequelize Model
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-  public id!: number;
-  public name!: string;
-  public email!: string;
+  // Dùng `declare` để tránh làm hỏng Getter/Setter mặc định của Sequelize
+  public declare id: number;
+  public declare name: string;
+  public declare email: string;
 
   // timestamps!
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  public declare readonly createdAt: Date;
+  public declare readonly updatedAt: Date;
 }
 
 // 4. Định nghĩa cấu trúc cột giống như Migration
 User.init(
   {
     id: {
+      allowNull: false,
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,

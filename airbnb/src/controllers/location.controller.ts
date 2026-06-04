@@ -2,8 +2,9 @@ import { toLocationResponseDTo } from './../helper/mapper-helper';
 import { Request, Response } from "express"
 import { CreateLocationDTO, LocationResponseDTO, UpdateLocationDTO } from "../dto/location.dto"
 import Location from "../models/location"
-import { ApiResponse } from "../dto/api.dto";
+import { ApiResponse, SearchPaginationQueryRequest } from "../dto/api.dto";
 import { ResponseHandler } from "../helper/handler-helper";
+import { Op } from 'sequelize';
 const getLocationList = async (req: Request, res: Response<LocationResponseDTO>) => {
     try {
         const locations = await Location.findAll({ raw: true });
@@ -13,16 +14,38 @@ const getLocationList = async (req: Request, res: Response<LocationResponseDTO>)
         return ResponseHandler.error(res, error, 500);
     }
 }
-const getLocationListSearchPagination = () => {
-
+const getLocationListSearchPagination = async (req: Request<{}, {}, {}, SearchPaginationQueryRequest>, res: Response<LocationResponseDTO[]>) => {
+    const { pageIndex = 1, pageSize = 2, keyword = '' } = req.query;
+    try {
+        const offset = (pageIndex - 1) * pageSize;
+        const locations = await Location.findAll(
+            {
+                where: {
+                    name: {
+                        [Op.like]: `%${keyword}%`
+                    },
+                },
+                limit: pageSize,
+                offset,
+                raw: true
+            },)
+        console.log(pageIndex, pageSize, keyword, locations)
+        return ResponseHandler.success(res, locations.map(toLocationResponseDTo), 200);
+    } catch (error) {
+        return ResponseHandler.error(res, error, 500);
+    }
 }
-const getLocationDetailById = async (req: Request<{ id: number }>, res: Response) => {
+const getLocationDetailById = async (req: Request<{ id: number }>, res: Response<LocationResponseDTO>) => {
     const { id } = req.params;
     try {
         const location = await Location.findOne({ where: { id } });
-        return res.status(500).send(location);
+        if (location) {
+            return ResponseHandler.success(res, toLocationResponseDTo(location), 200);
+        } else {
+            return ResponseHandler.error(res, null, 404, "Not Found");
+        }
     } catch (error) {
-        return res.status(500).send(error);
+        return ResponseHandler.error(res, error, 500);
     }
 }
 const createLocation = async (req: Request<{}, {}, CreateLocationDTO>, res: Response<ApiResponse<LocationResponseDTO>>) => {

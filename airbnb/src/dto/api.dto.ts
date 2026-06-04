@@ -1,3 +1,9 @@
+interface SearchPaginationQueryRequest {
+    pageIndex: number,
+    pageSize: number,
+    keyword: string
+}
+
 interface ApiResponse<T> {
     statusCode: number,
     message?: string,
@@ -5,4 +11,5 @@ interface ApiResponse<T> {
     dataTime: Date
 }
 
-export { ApiResponse }
+
+export { SearchPaginationQueryRequest, ApiResponse, }

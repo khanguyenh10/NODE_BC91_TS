@@ -8,7 +8,7 @@ yarn add express mysql2 sequelize bcryptjs gravatar-url jsonwebtoken mkdirp mult
 
 yarn add -D nodemon sequelize-cli
 
-yarn add -D typescript ts-node @types/node @types/express @types/bcryptjs @types/jsonwebtoken @types/multer
+yarn add -D typescript ts-node @types/node @types/express @types/bcryptjs @types/jsonwebtoken @types/multer dotenv 
 
 //2. khởi tạo typescript
 npx tsc --init

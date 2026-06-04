@@ -1,41 +1,46 @@
 import { toLocationResponseDTo } from './../helper/mapper-helper';
 import { Request, Response } from "express"
-import { CreateLocationDTO, LocationResponseDTO, UpdateLocationDTO } from "../dto/location.dto"
-import Location from "../models/location"
-import { ApiResponse, SearchPaginationQueryRequest } from "../dto/api.dto";
 import { ResponseHandler } from "../helper/handler-helper";
 import { Op } from 'sequelize';
-const getLocationList = async (req: Request, res: Response<LocationResponseDTO>) => {
+import { CreateLocationReq, LocationIdQueryReq, LocationRes, UpdateLocationReq } from '../dto/location.dto';
+import { ApiRes, SearchPagingQueryReq, SearchPagingRes } from '../dto/api.dto';
+import Location from '../models/location';
+const getLocationList = async (req: Request, res: Response<LocationRes>) => {
     try {
         const locations = await Location.findAll({ raw: true });
-        console.log(locations);
         return ResponseHandler.success(res, locations.map(toLocationResponseDTo), 200);
     } catch (error) {
         return ResponseHandler.error(res, error, 500);
     }
 }
-const getLocationListSearchPagination = async (req: Request<{}, {}, {}, SearchPaginationQueryRequest>, res: Response<LocationResponseDTO[]>) => {
+const getLocationListSearchPagination = async (req: Request<{}, {}, {}, SearchPagingQueryReq>, res: Response<LocationRes[]>) => {
     const { pageIndex = 1, pageSize = 2, keyword = '' } = req.query;
     try {
         const offset = (pageIndex - 1) * pageSize;
-        const locations = await Location.findAll(
+        const locations = await Location.findAndCountAll(
             {
                 where: {
                     name: {
                         [Op.like]: `%${keyword}%`
                     },
                 },
-                limit: pageSize,
-                offset,
+                limit: +pageSize,
+                offset: +offset,
                 raw: true
             },)
-        console.log(pageIndex, pageSize, keyword, locations)
-        return ResponseHandler.success(res, locations.map(toLocationResponseDTo), 200);
+        const dataResponse: SearchPagingRes<LocationRes[]> = {
+            pageIndex: +pageIndex,
+            pageSize: +pageSize,
+            totalRow: locations.count,
+            keyword,
+            data: locations.rows.map(toLocationResponseDTo)
+        }
+        return ResponseHandler.success(res, dataResponse, 200);
     } catch (error) {
         return ResponseHandler.error(res, error, 500);
     }
 }
-const getLocationDetailById = async (req: Request<{ id: number }>, res: Response<LocationResponseDTO>) => {
+const getLocationDetailById = async (req: Request<{ id: number }>, res: Response<LocationRes>) => {
     const { id } = req.params;
     try {
         const location = await Location.findOne({ where: { id } });
@@ -48,7 +53,7 @@ const getLocationDetailById = async (req: Request<{ id: number }>, res: Response
         return ResponseHandler.error(res, error, 500);
     }
 }
-const createLocation = async (req: Request<{}, {}, CreateLocationDTO>, res: Response<ApiResponse<LocationResponseDTO>>) => {
+const createLocation = async (req: Request<{}, {}, CreateLocationReq>, res: Response<ApiRes<LocationRes>>) => {
     const { tenViTri = '', tinhThanh = '', quocGia = '', hinhAnh = '' } = req.body;
     try {
         const newLocation = await Location.create({
@@ -62,7 +67,7 @@ const createLocation = async (req: Request<{}, {}, CreateLocationDTO>, res: Resp
         return ResponseHandler.error(res, error, 500);
     }
 }
-const updateLocationById = async (req: Request<{ id: number }, {}, UpdateLocationDTO>, res: Response<ApiResponse<LocationResponseDTO>>) => {
+const updateLocationById = async (req: Request<{ id: number }, {}, UpdateLocationReq>, res: Response<ApiRes<LocationRes>>) => {
     const { id } = req.params;
     const { tenViTri = '', tinhThanh = "", quocGia = "", hinhAnh = "" } = req.body;
     try {
@@ -97,5 +102,23 @@ const deleteLocationById = async (req: Request<{ id: number }>, res: Response) =
         return ResponseHandler.error(res, error, 500);
     }
 }
-
-export { getLocationList, getLocationListSearchPagination, getLocationDetailById, createLocation, updateLocationById, deleteLocationById }
+const uploadPhotoLocationById = async (req: Request, res: Response) => {
+    const { maViTri } = req.query as unknown as LocationIdQueryReq;
+    const { file } = req;
+    try {
+        const urlImage = `${process.env.BASE_URL}/${file?.path}`;
+        const uploadPhotoLocation = await Location.findOne({ where: { id: maViTri } });
+        if (uploadPhotoLocation) {
+            uploadPhotoLocation.set({
+                photo: urlImage
+            });
+            await uploadPhotoLocation.save();
+            return ResponseHandler.success(res, toLocationResponseDTo(uploadPhotoLocation), 200)
+        } else {
+            return ResponseHandler.error(res, null, 404, "Not Found");
+        }
+    } catch (error) {
+        return ResponseHandler.error(res, error, 500);
+    }
+}
+export { getLocationList, getLocationListSearchPagination, getLocationDetailById, createLocation, updateLocationById, deleteLocationById, uploadPhotoLocationById }

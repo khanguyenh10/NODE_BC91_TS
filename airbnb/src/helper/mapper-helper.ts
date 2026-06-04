@@ -1,6 +1,6 @@
-import { LocationResponseDTO } from "../dto/location.dto";
+import { LocationRes } from "../dto/location.dto";
 
-export const toLocationResponseDTo = (location: any): LocationResponseDTO => {
+export const toLocationResponseDTo = (location: any): LocationRes => {
     return {
         id: location?.id,
         tenViTri: location?.name,

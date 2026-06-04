@@ -1,13 +1,21 @@
 import express from "express";
 import { sequelize } from "./models";
 import router from "./routers";
-
+import path from "path";
+import dotenv from 'dotenv';
 //1. khởi tạo express js
 const app = express();
+
 //2. khởi tạo port
 const port = 3000;
+
 //2.2 parse res to json
 app.use(express.json());
+
+//2.3 cài static file
+const publicPathDirectory = path.join(__dirname, "../public");
+app.use("/public", express.static(publicPathDirectory));
+
 //3. kiểm tra server thành công chưa
 app.listen(port, async () => {
     console.log(`Server is running port ${3000}`);
@@ -23,3 +31,5 @@ app.listen(port, async () => {
 //5. set up router
 app.use("/api/v1", router);
 
+//6. env
+dotenv.config(); // This must run BEFORE any code that uses process.env

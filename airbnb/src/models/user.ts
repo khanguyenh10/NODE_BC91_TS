@@ -6,6 +6,12 @@ interface UserAttributes {
   id: number;
   name: string;
   email: string;
+  password: string;
+  phone: string;
+  birthday: Date;
+  avatar: string;
+  gender: boolean;
+  role: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -14,16 +20,7 @@ interface UserAttributes {
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> { }
 
 // 3. Khởi tạo Class Model kế thừa từ Sequelize Model
-class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-  // Dùng `declare` để tránh làm hỏng Getter/Setter mặc định của Sequelize
-  public declare id: number;
-  public declare name: string;
-  public declare email: string;
-
-  // timestamps!
-  public declare readonly createdAt: Date;
-  public declare readonly updatedAt: Date;
-}
+class User extends Model<UserAttributes, UserCreationAttributes> { }
 
 // 4. Định nghĩa cấu trúc cột giống như Migration
 User.init(
@@ -42,6 +39,31 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    birthday: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    gender: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
+    avatar: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    role: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: "CLIENT"
     },
   },
   {

@@ -8,10 +8,10 @@ import { toBoolean } from "../helper/text-helper";
 const register = async (req: Request<{}, {}, RegisterReq>, res: Response<UserRes>) => {
     const { name = '', email = '', password = '', phone = "", gender = true, role = '', birthday = '' } = req.body;
     try {
-        const user = await User.findOne({ where: { email } });
-        if (user) {
-            return ResponseHandler.error(res, "This email has registed", 400);
-        }
+        // const user = await User.findOne({ where: { email } });
+        // if (user) {
+        //     return ResponseHandler.error(res, "This email has registed", 400);
+        // }
         // gen ảnh avatar động
         const avatarUrl = getAvatar(email);
         //tạo password mã hóa
@@ -28,7 +28,7 @@ const register = async (req: Request<{}, {}, RegisterReq>, res: Response<UserRes
             avatar: avatarUrl,
             birthday: new Date(birthday)
         })
-
+        console.log("user", newUser)
         return ResponseHandler.success(res, newUser, 201);
     } catch (error) {
         return ResponseHandler.error(res, error, 500);

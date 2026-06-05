@@ -118,6 +118,7 @@ const uploadPhotoLocationById = async (req: Request, res: Response) => {
             return ResponseHandler.error(res, null, 404, "Not Found");
         }
     } catch (error) {
+        console.log("FF", error);
         return ResponseHandler.error(res, error, 500);
     }
 }

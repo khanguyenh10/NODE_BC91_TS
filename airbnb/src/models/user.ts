@@ -38,11 +38,24 @@ User.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      // unique: {
+      //   name: "emai",
+      //   msg: 'Email has registered'
+      // },
+      // validate: {
+      //   notEmpty: {
+      //     msg: "Email is not empty"
+      //   }
+      // }
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: {
+          msg: "Password is not empty"
+        }
+      }
     },
     phone: {
       type: DataTypes.STRING,

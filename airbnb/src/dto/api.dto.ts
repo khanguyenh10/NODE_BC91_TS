@@ -8,7 +8,7 @@ interface ApiRes<T> {
     statusCode: number,
     message?: string,
     content: T,
-    dataTime: Date
+    dateTime: string
 }
 interface SearchPagingRes<T> {
     pageIndex: number,

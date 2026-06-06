@@ -1,0 +1,19 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.locationRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const location_controller_1 = require("../controllers/location.controller");
+const upload_image_1 = require("../middleware/upload/upload-image");
+const authenticate_1 = require("../middleware/auth/authenticate");
+const locationRouter = express_1.default.Router();
+exports.locationRouter = locationRouter;
+locationRouter.get("/", location_controller_1.getLocationList);
+locationRouter.get("/phan-trang-tim-kiem", location_controller_1.getLocationListSearchPagination);
+locationRouter.get("/:id", location_controller_1.getLocationDetailById);
+locationRouter.post("/", authenticate_1.authenticate, location_controller_1.createLocation);
+locationRouter.put("/:id", authenticate_1.authenticate, location_controller_1.updateLocationById);
+locationRouter.delete("/:id", authenticate_1.authenticate, location_controller_1.deleteLocationById);
+locationRouter.post("/upload-hinh-vitri", authenticate_1.authenticate, (0, upload_image_1.uploadImage)('locations'), location_controller_1.uploadPhotoLocationById);

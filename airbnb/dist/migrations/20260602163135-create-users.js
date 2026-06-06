@@ -12,8 +12,38 @@ async function up(queryInterface) {
             type: sequelize_1.DataTypes.INTEGER
         },
         name: {
+            type: sequelize_1.DataTypes.STRING,
             allowNull: false,
-            type: sequelize_1.DataTypes.STRING
+        },
+        email: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: false,
+            unique: true,
+        },
+        password: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: false,
+        },
+        phone: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: false,
+        },
+        birthday: {
+            type: sequelize_1.DataTypes.DATE,
+            allowNull: false,
+        },
+        gender: {
+            type: sequelize_1.DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        avatar: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: false,
+        },
+        role: {
+            type: sequelize_1.DataTypes.STRING,
+            allowNull: false,
+            defaultValue: "CLIENT"
         },
         createdAt: {
             allowNull: false,

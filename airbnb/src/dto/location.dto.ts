@@ -3,7 +3,7 @@ interface LocationDTO {
     tenViTri: string,
     tinhThanh: string,
     quocGia: string,
-    hinhAnh: string
+    hinhAnh: string,
 }
 
 type CreateLocationReq = Omit<LocationRes, "id">;

@@ -17,7 +17,17 @@ interface LocationCreationAttributes extends Optional<LocationAttributes, "id"> 
 
 
 // 3. Khởi tạo Class Model kế thừa từ Sequelize Model
-class Location extends Model<LocationAttributes, LocationCreationAttributes> { };
+class Location extends Model<LocationAttributes, LocationCreationAttributes> implements LocationAttributes {
+    // Sử dụng public declare để báo cho TypeScript biết các thuộc tính này tồn tại trên instance
+    public declare id: number;
+    public declare name: string;
+    public declare province: string;
+    public declare country: string;
+    public declare photo: string;
+    // Các thuộc tính tự động của Sequelize (nếu có dùng)
+    public declare readonly createdAt: Date;
+    public declare readonly updatedAt: Date;
+};
 
 // 4. Định nghĩa cấu trúc cột giống như Migration
 Location.init(
@@ -47,7 +57,12 @@ Location.init(
     },
     {
         sequelize,
-        tableName: 'locations'
+        tableName: 'locations',
+        defaultScope: {
+            attributes: {
+                exclude: ["createdAt", "updatedAt"]
+            }
+        }
     }
 )
 export default Location;

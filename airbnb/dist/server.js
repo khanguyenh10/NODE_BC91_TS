@@ -5,10 +5,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const models_1 = require("./models");
+const routers_1 = __importDefault(require("./routers"));
+const path_1 = __importDefault(require("path"));
+const dotenv_1 = __importDefault(require("dotenv"));
 //1. khởi tạo express js
 const app = (0, express_1.default)();
 //2. khởi tạo port
 const port = 3000;
+//2.2 parse res to json
+app.use(express_1.default.json());
+//2.3 cài static file
+const publicPathDirectory = path_1.default.join(__dirname, "../public");
+app.use("/public", express_1.default.static(publicPathDirectory));
 //3. kiểm tra server thành công chưa
 app.listen(port, async () => {
     console.log(`Server is running port ${3000}`);
@@ -22,3 +30,7 @@ app.listen(port, async () => {
         console.log(error);
     }
 });
+//5. set up router
+app.use("/api/v1", routers_1.default);
+//6. env
+dotenv_1.default.config(); // This must run BEFORE any code that uses process.env

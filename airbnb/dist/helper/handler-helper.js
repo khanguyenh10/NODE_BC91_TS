@@ -1,29 +1,20 @@
-import { Response } from "express";
-import { ApiRes } from "../dto/api.dto";
-export class ResponseHandler {
-    static success<T>(
-        res: Response<ApiRes<T>>,
-        content: T,
-        statusCode = 500,
-    ) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ResponseHandler = void 0;
+class ResponseHandler {
+    static success(res, content, statusCode = 500) {
         return res.status(statusCode).json({
             statusCode,
             content,
             dateTime: new Date().toISOString(),
-        })
+        });
     }
-    static error<T>(
-        res: Response<ApiRes<T>>,
-        errors: T,
-        statusCode: number,
-    ) {
-        const errorDetails = errors as any;
+    static error(res, errors, statusCode) {
+        const errorDetails = errors;
         let message = "Error";
-        let content = errors
-        if (
-            errorDetails?.name === 'SequelizeUniqueConstraintError' ||
-            errorDetails?.name === 'SequelizeValidationError'
-        ) {
+        let content = errors;
+        if (errorDetails.name === 'SequelizeUniqueConstraintError' ||
+            errorDetails.name === 'SequelizeValidationError') {
             statusCode = 400;
             content = errorDetails.errors[0].message;
         }
@@ -41,6 +32,7 @@ export class ResponseHandler {
             message,
             content,
             dateTime: new Date().toISOString()
-        })
+        });
     }
 }
+exports.ResponseHandler = ResponseHandler;

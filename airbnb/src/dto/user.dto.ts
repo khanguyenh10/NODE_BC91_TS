@@ -1,7 +1,9 @@
+import { Request } from "express"
 interface UserDTO {
+    id: string,
     name: string,
     email: string,
-    password: string,
+    password?: string,
     phone: string,
     birthday: string,
     gender: boolean,
@@ -10,6 +12,15 @@ interface UserDTO {
 }
 type UserRes = UserDTO;
 type RegisterReq = UserDTO;
-type LoginReq = Partial<UserDTO>;
+type UpdateUserReq = Partial<UserDTO>;
+type LoginReq = {
+    email: string,
+    password: string
+}
 
-export { UserDTO, UserRes, RegisterReq, LoginReq }
+// Define an extended interface locally
+interface AuthenticatedReq extends Request {
+    user?: any;
+}
+
+export { UserDTO, UserRes, RegisterReq, LoginReq, AuthenticatedReq, UpdateUserReq }

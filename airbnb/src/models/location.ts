@@ -3,6 +3,7 @@
 
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from ".";
+import Room from "./room";
 interface LocationAttributes {
     id: number,
     name: string,
@@ -65,4 +66,7 @@ Location.init(
         }
     }
 )
+// ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
+Location.hasMany(Room, { foreignKey: "locationId" });
+
 export default Location;

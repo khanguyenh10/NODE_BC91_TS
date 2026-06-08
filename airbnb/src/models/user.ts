@@ -1,5 +1,7 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import { sequelize } from './index';
+import RoomOrder from './roomOrder';
+import Comment from './comment';
 
 // 1. Định nghĩa các thuộc tính có trong Database
 interface UserAttributes {
@@ -142,7 +144,8 @@ User.init(
 
 // ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
 // User có nhiều Post
-// User.hasMany(Post, { foreignKey: 'userId', as: 'posts' });
+User.hasMany(RoomOrder, { foreignKey: 'userId' });
+User.hasMany(Comment, { foreignKey: 'userId' });
 
 // Post thuộc về một User
 // Post.belongsTo(User, { foreignKey: 'userId', as: 'user' });

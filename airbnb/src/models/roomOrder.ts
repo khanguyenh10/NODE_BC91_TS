@@ -1,7 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from ".";
-import User from "./user";
-import Room from "./room";
 // 1. Định nghĩa các thuộc tính có trong Database
 interface RoomOrderAttributes {
     id: number;
@@ -32,6 +30,12 @@ class RoomOrder extends Model<RoomOrderAttributes, RoomOrderCreatationAttributes
     // Các thuộc tính tự động của Sequelize (nếu có dùng)
     public declare readonly createdAt: Date;
     public declare readonly updatedAt: Date;
+
+    static associate(models: any) {
+        // ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
+        RoomOrder.belongsTo(models.User, { foreignKey: "userId" });
+        RoomOrder.belongsTo(models.Room, { foreignKey: "roomId" });
+    }
 }
 
 RoomOrder.init(
@@ -81,8 +85,6 @@ RoomOrder.init(
         }
     }
 )
-// ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
-RoomOrder.belongsTo(User, { foreignKey: "userId" });
-RoomOrder.belongsTo(Room, { foreignKey: "roomId" });
+
 
 export default RoomOrder;

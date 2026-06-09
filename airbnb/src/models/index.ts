@@ -1,9 +1,16 @@
-import { Sequelize } from 'sequelize';
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
+import { sequelize } from './connect';
+import Location from './location';
+import Room from './room';
+import RoomOrder from './roomOrder';
+import Comment from './comment';
+import User from './user';
+const models = { Location, Room, RoomOrder, Comment, User };
 
-const sequelize = config.use_env_variable
-  ? new Sequelize(process.env[config.use_env_variable]!, config)
-  : new Sequelize(config.database, config.username, config.password, config);
+console.log(models)
+Location.associate(models);
+Room.associate(models);
+RoomOrder.associate(models);
+Comment.associate(models);
+User.associate(models);
 
-export { sequelize };
+export { sequelize, Location, Room, RoomOrder, Comment, User };

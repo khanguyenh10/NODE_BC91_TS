@@ -1,7 +1,6 @@
 import { Model, DataTypes, Optional } from 'sequelize';
 import { sequelize } from './index';
-import RoomOrder from './roomOrder';
-import Comment from './comment';
+
 
 // 1. Định nghĩa các thuộc tính có trong Database
 interface UserAttributes {
@@ -37,6 +36,13 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   // Các thuộc tính tự động của Sequelize (nếu có dùng)
   public declare readonly createdAt: Date;
   public declare readonly updatedAt: Date;
+
+  static associate(models: any) {
+    // User có nhiều Post
+    User.hasMany(models.RoomOrder, { foreignKey: 'userId' });
+    User.hasMany(models.Comment, { foreignKey: 'userId' });
+
+  }
 }
 
 // 4. Định nghĩa cấu trúc cột giống như Migration
@@ -143,9 +149,6 @@ User.init(
 );
 
 // ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
-// User có nhiều Post
-User.hasMany(RoomOrder, { foreignKey: 'userId' });
-User.hasMany(Comment, { foreignKey: 'userId' });
 
 // Post thuộc về một User
 // Post.belongsTo(User, { foreignKey: 'userId', as: 'user' });

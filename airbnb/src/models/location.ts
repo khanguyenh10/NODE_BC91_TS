@@ -3,7 +3,6 @@
 
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from ".";
-import Room from "./room";
 interface LocationAttributes {
     id: number,
     name: string,
@@ -28,6 +27,12 @@ class Location extends Model<LocationAttributes, LocationCreationAttributes> imp
     // Các thuộc tính tự động của Sequelize (nếu có dùng)
     public declare readonly createdAt: Date;
     public declare readonly updatedAt: Date;
+
+
+    static associate(models: any) {
+        // ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
+        Location.hasMany(models.Room, { foreignKey: "locationId" });
+    }
 };
 
 // 4. Định nghĩa cấu trúc cột giống như Migration
@@ -66,7 +71,6 @@ Location.init(
         }
     }
 )
-// ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
-Location.hasMany(Room, { foreignKey: "locationId" });
+
 
 export default Location;

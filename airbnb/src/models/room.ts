@@ -1,6 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from ".";
-import Location from "./location";
 // 1. Định nghĩa các thuộc tính có trong Database
 interface RoomAttributes {
     id: number;
@@ -58,6 +57,11 @@ class Room extends Model<RoomAttributes, RoomOrderCreatationAttributes> implemen
     // Các thuộc tính tự động của Sequelize (nếu có dùng)
     public declare readonly createdAt: Date;
     public declare readonly updatedAt: Date;
+
+
+    static associate(models: any) {
+        Room.belongsTo(models.Location, { foreignKey: "locationId" });
+    }
 }
 
 Room.init(
@@ -155,6 +159,5 @@ Room.init(
         }
     }
 )
-Room.belongsTo(Location, { foreignKey: "locationId" });
 
 export default Room;

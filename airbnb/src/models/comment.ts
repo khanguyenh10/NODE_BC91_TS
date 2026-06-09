@@ -1,7 +1,5 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from ".";
-import User from "./user";
-import Room from "./room";
 // 1. Định nghĩa các thuộc tính có trong Database
 interface CommentAttributes {
     id: number;
@@ -32,6 +30,12 @@ class Comment extends Model<CommentAttributes, CommentCreatationAttributes> impl
     // Các thuộc tính tự động của Sequelize (nếu có dùng)
     public declare readonly createdAt: Date;
     public declare readonly updatedAt: Date;
+
+    static associate(models: any) {
+        // ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
+        Comment.belongsTo(models.User, { foreignKey: "userId" });
+        Comment.belongsTo(models.Room, { foreignKey: "roomId" });
+    }
 }
 
 Comment.init(
@@ -82,8 +86,6 @@ Comment.init(
     }
 )
 
-// ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
-Comment.belongsTo(User, { foreignKey: "userId" });
-Comment.belongsTo(Room, { foreignKey: "roomId" });
+
 
 export default Comment;

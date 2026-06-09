@@ -52,6 +52,9 @@ RoomOrder.init(
             references: {
                 model: "rooms",
                 key: "id"
+            },
+            validate: {
+                isInt: true
             }
         },
         userId: {
@@ -60,19 +63,37 @@ RoomOrder.init(
             references: {
                 model: "users",
                 key: "id"
+            },
+            validate: {
+                isInt: true
             }
         },
         fromDate: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            validate: {
+                isDate: {
+                    args: true,
+                    msg: "Date Invalid date format"
+                }
+            }
         },
         toDate: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            validate: {
+                isDate: {
+                    args: true,
+                    msg: "Date Invalid date format"
+                }
+            }
         },
         guestCount: {
             allowNull: false,
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: true
+            }
         }
     },
     {

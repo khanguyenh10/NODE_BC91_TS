@@ -74,39 +74,65 @@ Room.init(
         },
         name: {
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: {
+                    msg: "Name is not empty"
+                }
+            }
         },
         guestCount: {
             allowNull: false,
             type: DataTypes.INTEGER,
+            validate: {
+                isInt: true
+            }
         },
         bedRoomCount: {
             allowNull: false,
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: true
+            }
         },
         bedCount: {
             allowNull: false,
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: true
+            }
         },
         bathRoomCount: {
             allowNull: false,
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: true
+            }
         },
         description: {
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: {
+                    msg: "Description is not empty"
+                }
+            }
         },
         price: {
             allowNull: false,
-            type: DataTypes.FLOAT
+            type: DataTypes.FLOAT,
+            validate: {
+                isFloat: true
+            }
         },
         photo: {
             allowNull: false,
             type: DataTypes.STRING
+
         },
         hasWifi: {
             allowNull: false,
-            type: DataTypes.BOOLEAN
+            type: DataTypes.BOOLEAN,
         },
         hasTV: {
             allowNull: false,
@@ -146,12 +172,15 @@ Room.init(
             references: {
                 model: "locations",
                 key: "id"
+            },
+            validate: {
+                isInt: true
             }
         }
     },
     {
         sequelize,
-        tableName: "room_orders",
+        tableName: "rooms",
         defaultScope: {
             attributes: {
                 exclude: ['createdAt', 'updatedAt']

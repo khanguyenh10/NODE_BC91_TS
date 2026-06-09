@@ -81,7 +81,7 @@ const updateLocationById = async (req: Request<{ id: string }, {}, UpdateLocatio
             await updateLocation.save();
             return ResponseHandler.success(res, toLocationResponseDTo(updateLocation), 200);
         } else {
-            return ResponseHandler.error(res, toLocationResponseDTo(updateLocation), 404);
+            return ResponseHandler.error(res, null, 404);
         }
 
     } catch (error) {

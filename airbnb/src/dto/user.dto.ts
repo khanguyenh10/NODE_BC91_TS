@@ -1,11 +1,11 @@
 import { Request } from "express"
 interface UserDTO {
-    id: string,
+    id: number,
     name: string,
     email: string,
     password?: string,
     phone: string,
-    birthday: string,
+    birthday: Date,
     gender: boolean,
     avatar: string,
     role?: string

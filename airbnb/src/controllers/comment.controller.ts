@@ -70,7 +70,7 @@ const updateCommentById = async (req: Request<{ id: string }, {}, UpdateCommentR
             await updateComment.save();
             return ResponseHandler.success(res, toCommentResponseDTo(updateComment), 200);
         } else {
-            return ResponseHandler.error(res, toCommentResponseDTo(updateComment), 404);
+            return ResponseHandler.error(res, null, 404);
         }
 
     } catch (error) {

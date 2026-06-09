@@ -2,7 +2,7 @@ interface CommentDTO {
     id: number,
     maPhong: number,
     maNguoiBinhLuan: number,
-    ngayBinhLuan: string,
+    ngayBinhLuan: Date,
     noiDung: string,
     saoBinhLuan: number,
 }

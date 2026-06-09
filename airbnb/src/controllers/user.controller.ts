@@ -111,7 +111,7 @@ const updateUserById = async (req: Request<{ id: string }, {}, UpdateUserReq>, r
             await updateUser.save();
             return ResponseHandler.success(res, toUserResponseDTo(updateUser), 200);
         } else {
-            return ResponseHandler.error(res, toUserResponseDTo(updateUser), 404);
+            return ResponseHandler.error(res, null, 404);
         }
 
     } catch (error) {

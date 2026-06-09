@@ -1,3 +1,4 @@
+import { CommentRes } from "../dto/comment.dto";
 import { LocationRes } from "../dto/location.dto";
 import { UserRes } from "../dto/user.dto";
 
@@ -21,5 +22,16 @@ export const toUserResponseDTo = (user: any): UserRes => {
         gender: user?.gender,
         avatar: user?.avatar,
         role: user?.role
+    };
+}
+
+export const toCommentResponseDTo = (comment: any): CommentRes => {
+    return {
+        id: comment?.id,
+        maPhong: comment?.roomId,
+        maNguoiBinhLuan: comment?.userId,
+        ngayBinhLuan: comment?.date,
+        noiDung: comment?.content,
+        saoBinhLuan: comment?.star,
     };
 }

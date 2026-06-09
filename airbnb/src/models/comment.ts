@@ -52,6 +52,9 @@ Comment.init(
             references: {
                 model: "rooms",
                 key: "id"
+            },
+            validate: {
+                isInt: true
             }
         },
         userId: {
@@ -60,19 +63,36 @@ Comment.init(
             references: {
                 model: "users",
                 key: "id"
+            },
+            validate: {
+                isInt: true
             }
         },
         content: {
             allowNull: false,
-            type: DataTypes.STRING
+            type: DataTypes.STRING,
+            validate: {
+                notEmpty: {
+                    msg: "Content is not empty"
+                }
+            }
         },
         date: {
             allowNull: false,
-            type: DataTypes.DATE
+            type: DataTypes.DATE,
+            validate: {
+                isDate: {
+                    args: true,
+                    msg: "Date Invalid date format"
+                }
+            }
         },
         star: {
             allowNull: false,
-            type: DataTypes.INTEGER
+            type: DataTypes.INTEGER,
+            validate: {
+                isInt: true
+            }
         }
     },
     {

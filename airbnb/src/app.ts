@@ -3,6 +3,10 @@ import { sequelize } from "./models";
 import router from "./routers";
 import path from "path";
 import dotenv from 'dotenv';
+
+//0. env
+dotenv.config(); // This must run BEFORE any code that uses process.env
+
 //1. khởi tạo express js
 const app = express();
 
@@ -28,7 +32,5 @@ checkConnectSequelize();
 //5. set up router
 app.use("/api/v1", router);
 
-//6. env
-dotenv.config(); // This must run BEFORE any code that uses process.env
 
 export default app;

@@ -172,4 +172,4 @@ dist/log*
 test/e2e-cypress/screenshots
 test/e2e-cypress/videos
 
-/dist
+dist

@@ -4,6 +4,11 @@ const sequelize_1 = require("sequelize");
 const index_1 = require("./index");
 // 3. Khởi tạo Class Model kế thừa từ Sequelize Model
 class User extends sequelize_1.Model {
+    static associate(models) {
+        // User có nhiều Post
+        User.hasMany(models.RoomOrder, { foreignKey: 'userId' });
+        User.hasMany(models.Comment, { foreignKey: 'userId' });
+    }
 }
 // 4. Định nghĩa cấu trúc cột giống như Migration
 User.init({
@@ -98,10 +103,13 @@ User.init({
 }, {
     sequelize: index_1.sequelize,
     tableName: 'users',
+    defaultScope: {
+        attributes: {
+            exclude: ["createdAt", "updatedAt"]
+        }
+    }
 });
 // ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
-// User có nhiều Post
-// User.hasMany(Post, { foreignKey: 'userId', as: 'posts' });
 // Post thuộc về một User
 // Post.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 exports.default = User;

@@ -5,6 +5,10 @@ const sequelize_1 = require("sequelize");
 const _1 = require(".");
 // 3. Khởi tạo Class Model kế thừa từ Sequelize Model
 class Location extends sequelize_1.Model {
+    static associate(models) {
+        // ---- ĐỊNH NGHĨA LIÊN KẾT Ở ĐÂY ----
+        Location.hasMany(models.Room, { foreignKey: "locationId" });
+    }
 }
 ;
 // 4. Định nghĩa cấu trúc cột giống như Migration
@@ -33,6 +37,11 @@ Location.init({
     },
 }, {
     sequelize: _1.sequelize,
-    tableName: 'locations'
+    tableName: 'locations',
+    defaultScope: {
+        attributes: {
+            exclude: ["createdAt", "updatedAt"]
+        }
+    }
 });
 exports.default = Location;

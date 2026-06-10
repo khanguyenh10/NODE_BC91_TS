@@ -93,7 +93,7 @@ const updateLocationById = async (req, res) => {
             return handler_helper_1.ResponseHandler.success(res, (0, mapper_helper_1.toLocationResponseDTo)(updateLocation), 200);
         }
         else {
-            return handler_helper_1.ResponseHandler.error(res, (0, mapper_helper_1.toLocationResponseDTo)(updateLocation), 404);
+            return handler_helper_1.ResponseHandler.error(res, null, 404);
         }
     }
     catch (error) {

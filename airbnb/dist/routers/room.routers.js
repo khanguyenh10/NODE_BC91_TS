@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.roomRouter = void 0;
+const express_1 = __importDefault(require("express"));
+const upload_image_1 = require("../middleware/upload/upload-image");
+const authenticate_1 = require("../middleware/auth/authenticate");
+const authorize_1 = require("../middleware/auth/authorize");
+const room_controller_1 = require("../controllers/room.controller");
+const roomRouter = express_1.default.Router();
+exports.roomRouter = roomRouter;
+roomRouter.get("/", room_controller_1.getRoomList);
+roomRouter.get("/lay-phong-theo-vi-tri", room_controller_1.getRoomListByLocationId);
+roomRouter.get("/phan-trang-tim-kiem", room_controller_1.getRoomListSearchPagination);
+roomRouter.get("/:id", room_controller_1.getRoomDetailById);
+roomRouter.post("/", authenticate_1.authenticate, authorize_1.authorize, room_controller_1.createRoom);
+roomRouter.put("/:id", authenticate_1.authenticate, authorize_1.authorize, room_controller_1.updateRoomById);
+roomRouter.delete("/:id", authenticate_1.authenticate, authorize_1.authorize, room_controller_1.deleteRoomById);
+roomRouter.post("/upload-hinh-phongthue", authenticate_1.authenticate, authorize_1.authorize, (0, upload_image_1.uploadImage)('locations'), room_controller_1.uploadPhotoRoomById);

@@ -10,12 +10,12 @@ const authenticate = (req, res, next) => {
     try {
         const token = req.header("token");
         const decode = jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY);
-        req.user = {};
+        req.user = decode;
         next();
     }
     catch (error) {
         console.log(error);
-        return handler_helper_1.ResponseHandler.error(res, error, 401);
+        return handler_helper_1.ResponseHandler.error(res, "You are not logged in", 401);
     }
 };
 exports.authenticate = authenticate;

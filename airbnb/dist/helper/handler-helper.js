@@ -13,8 +13,8 @@ class ResponseHandler {
         const errorDetails = errors;
         let message = "Error";
         let content = errors;
-        if (errorDetails.name === 'SequelizeUniqueConstraintError' ||
-            errorDetails.name === 'SequelizeValidationError') {
+        if (errorDetails?.name === 'SequelizeUniqueConstraintError' ||
+            errorDetails?.name === 'SequelizeValidationError') {
             statusCode = 400;
             content = errorDetails.errors[0].message;
         }

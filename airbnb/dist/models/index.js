@@ -1,10 +1,25 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sequelize = void 0;
-const sequelize_1 = require("sequelize");
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.js')[env];
-const sequelize = config.use_env_variable
-    ? new sequelize_1.Sequelize(process.env[config.use_env_variable], config)
-    : new sequelize_1.Sequelize(config.database, config.username, config.password, config);
-exports.sequelize = sequelize;
+exports.User = exports.Comment = exports.RoomOrder = exports.Room = exports.Location = exports.sequelize = void 0;
+const connect_1 = require("./connect");
+Object.defineProperty(exports, "sequelize", { enumerable: true, get: function () { return connect_1.sequelize; } });
+const location_1 = __importDefault(require("./location"));
+exports.Location = location_1.default;
+const room_1 = __importDefault(require("./room"));
+exports.Room = room_1.default;
+const roomOrder_1 = __importDefault(require("./roomOrder"));
+exports.RoomOrder = roomOrder_1.default;
+const comment_1 = __importDefault(require("./comment"));
+exports.Comment = comment_1.default;
+const user_1 = __importDefault(require("./user"));
+exports.User = user_1.default;
+const models = { Location: location_1.default, Room: room_1.default, RoomOrder: roomOrder_1.default, Comment: comment_1.default, User: user_1.default };
+console.log(models);
+location_1.default.associate(models);
+room_1.default.associate(models);
+roomOrder_1.default.associate(models);
+comment_1.default.associate(models);
+user_1.default.associate(models);

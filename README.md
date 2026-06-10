@@ -5,3 +5,6 @@ Backend using nodejs
 - Kiến thức : nodejs
 - Kiến thức : expressjs
 - Kiến thức : swagger
+
+## Deploy với vercel
+https://viblo.asia/p/auto-deploy-nodejs-app-using-vercel-EbNVQx5oLvR

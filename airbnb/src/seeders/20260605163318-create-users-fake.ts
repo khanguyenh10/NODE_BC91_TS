@@ -8,10 +8,12 @@ export const up = async (queryInterface: QueryInterface) => {
       "email": "khanguyenh10@gmail.com",
       "password": "$2b$10$0dlbcsMKDNXTjV2QqNWHdOsAMxSonGRbJd8Um4F.Hl0m3rDvJTfbK",
       "phone": "8476244795",
-      "birthday": "2026-05-25T00:00:00.000Z",
+      "birthday": "2026-05-25",
       "gender": true,
       "avatar": "https://www.gravatar.com/avatar/14f2bf64b8734ec3b7b56303dbd22d5b",
-      "role": "CLIENT"
+      "role": "CLIENT",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 2,
@@ -19,10 +21,12 @@ export const up = async (queryInterface: QueryInterface) => {
       "email": "khanguyenh10dev@gmail.com",
       "password": "$2b$10$0dlbcsMKDNXTjV2QqNWHdOsAMxSonGRbJd8Um4F.Hl0m3rDvJTfbK",
       "phone": "8476244795",
-      "birthday": "2026-05-25T00:00:00.000Z",
+      "birthday": "2026-05-25",
       "gender": false,
       "avatar": "https://www.gravatar.com/avatar/14f2bf64b8734ec3b7b56303dbd22d5b",
-      "role": "ADMIN"
+      "role": "ADMIN",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
   ]);
 }

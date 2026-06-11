@@ -12,4 +12,3 @@ app.listen(port, async () => {
     console.log(`Server is running port ${port}`);
 
 })
-console.log(process.env)

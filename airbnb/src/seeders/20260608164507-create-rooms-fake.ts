@@ -21,7 +21,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": true,
       "hasIron": true,
       "locationId": 1,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong1.jpg"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong1.jpg",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 2,
@@ -42,7 +44,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": false,
       "hasIron": false,
       "locationId": 1,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong2.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong2.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 3,
@@ -63,7 +67,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": true,
       "hasIron": true,
       "locationId": 1,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong3.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong3.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 4,
@@ -84,7 +90,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": false,
       "hasIron": false,
       "locationId": 2,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong4.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong4.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 5,
@@ -105,7 +113,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": false,
       "hasIron": true,
       "locationId": 2,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong5.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong5.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 6,
@@ -126,7 +136,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": false,
       "hasIron": false,
       "locationId": 2,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong6.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong6.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 7,
@@ -147,7 +159,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": true,
       "hasIron": true,
       "locationId": 3,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong7.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong7.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 8,
@@ -168,7 +182,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": true,
       "hasIron": true,
       "locationId": 3,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong8.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong8.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 9,
@@ -189,7 +205,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": false,
       "hasIron": true,
       "locationId": 3,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong9.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong9.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 10,
@@ -210,7 +228,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "hasSwimmingPool": false,
       "hasIron": true,
       "locationId": 4,
-      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong10.png"
+      "photo": "https://airbnbnew.cybersoft.edu.vn/images/phong10.png",
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
   ]);
 }

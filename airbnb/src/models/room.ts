@@ -111,7 +111,7 @@ Room.init(
         },
         description: {
             allowNull: false,
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             validate: {
                 notEmpty: {
                     msg: "Description is not empty"

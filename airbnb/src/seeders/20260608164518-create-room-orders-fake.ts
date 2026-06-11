@@ -8,7 +8,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "fromDate": "2025-03-18T00:00:00",
       "toDate": "2025-03-25T00:00:00",
       "guestCount": 1,
-      "userId": 1
+      "userId": 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 2,
@@ -16,7 +18,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "fromDate": "2025-03-19T00:00:00",
       "toDate": "2025-03-20T00:00:00",
       "guestCount": 1,
-      "userId": 2
+      "userId": 2,
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
     {
       "id": 3,
@@ -24,7 +28,9 @@ export const up = async (queryInterface: QueryInterface) => {
       "fromDate": "2025-03-19T00:00:00",
       "toDate": "2025-03-17T00:00:00",
       "guestCount": 1,
-      "userId": 1
+      "userId": 1,
+      createdAt: new Date(),
+      updatedAt: new Date()
     },
 
   ]);

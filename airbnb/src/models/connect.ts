@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 dotenv.config();
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config')[env];
-console.log(config)
 
+console.log("env", config)
 
 const sequelize = config.use_env_variable
   ? new Sequelize(process.env[config.use_env_variable]!, config)

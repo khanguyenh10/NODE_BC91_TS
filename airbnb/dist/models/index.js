@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = exports.Comment = exports.RoomOrder = exports.Room = exports.Location = exports.sequelize = void 0;
+const connect_1 = require("./connect");
+Object.defineProperty(exports, "sequelize", { enumerable: true, get: function () { return connect_1.sequelize; } });
+const location_1 = __importDefault(require("./location"));
+exports.Location = location_1.default;
+const room_1 = __importDefault(require("./room"));
+exports.Room = room_1.default;
+const roomOrder_1 = __importDefault(require("./roomOrder"));
+exports.RoomOrder = roomOrder_1.default;
+const comment_1 = __importDefault(require("./comment"));
+exports.Comment = comment_1.default;
+const user_1 = __importDefault(require("./user"));
+exports.User = user_1.default;
+const models = { Location: location_1.default, Room: room_1.default, RoomOrder: roomOrder_1.default, Comment: comment_1.default, User: user_1.default };
+console.log(models);
+location_1.default.associate(models);
+room_1.default.associate(models);
+roomOrder_1.default.associate(models);
+comment_1.default.associate(models);
+user_1.default.associate(models);

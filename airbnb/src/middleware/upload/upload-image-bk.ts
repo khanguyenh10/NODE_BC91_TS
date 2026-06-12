@@ -1,8 +1,8 @@
-// import { mkdirp } from "mkdirp"
+import { mkdirp } from "mkdirp"
 import multer from "multer"
 
 const uploadImage = (type: string) => {
-    // const makeDirAuto = mkdirp.sync(`./public/images/${type}`);
+    const makeDirAuto = mkdirp.sync(`./public/images/${type}`);
     //1. tạo nơi lưu trữ và định dạng lại file name
     const storage = multer.diskStorage({
         destination: (req, file, cb) => {

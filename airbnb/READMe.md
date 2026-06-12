@@ -89,3 +89,8 @@ export async function down(queryInterface: QueryInterface) {
 }
 ```
 
+## Copy file
+```js
+npm i -D copyfiles
+"build": "tsc && copyfiles -f .env vercel.json dist",
+```

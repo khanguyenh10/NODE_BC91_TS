@@ -43,6 +43,7 @@ const login = async (req: Request<{}, {}, LoginReq>, res: Response<ApiRes<any>>)
     try {
         // kiểm tra email có tồn tại ko
         const user = await User.findOne({ where: { email }, raw: true },);
+        console.log(user, email, password)
         if (user) {
             const isAuth = await bcrypt.compare(password, user.password);
             if (isAuth) {

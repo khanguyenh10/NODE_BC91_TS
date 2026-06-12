@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --exec ts-node src/server.ts",
-    "build": "tsc && copyfiles -f .env dist",
+    "build": "tsc && copyfiles -f .env vercel.json dist",
     "start": "node dist/server.js"
   },
   "dependencies": {

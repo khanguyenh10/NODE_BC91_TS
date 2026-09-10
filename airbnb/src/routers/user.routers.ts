@@ -7,9 +7,9 @@ import { uploadImage } from "../middleware/upload/upload-image";
 
 const userRouter = express.Router();
 
-userRouter.post('/auth/signup', register);
+userRouter.post('/signup', register);
 
-userRouter.post('/auth/signin', login);
+userRouter.post('/signin', login);
 
 
 

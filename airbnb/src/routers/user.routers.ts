@@ -7,24 +7,18 @@ import { uploadImage } from "../middleware/upload/upload-image";
 
 const userRouter = express.Router();
 
-userRouter.post('/auth/signup', register);
+userRouter.get("/", getUserList);
 
-userRouter.post('/auth/signin', login);
+userRouter.get("/phan-trang-tim-kiem", getUserListSearchPagination);
 
-
-
-userRouter.get("/users/", getUserList);
-
-userRouter.get("/users/phan-trang-tim-kiem", getUserListSearchPagination);
-
-userRouter.get("/users/:id", getUserDetailById);
+userRouter.get("/:id", getUserDetailById);
 
 userRouter.post("/users", createUser);
 
-userRouter.put("/users/:id", authenticate, updateUserById);
+userRouter.put("/:id", authenticate, updateUserById);
 
-userRouter.delete("/users/:id", authenticate, authorize, deleteUserById);
+userRouter.delete("/:id", authenticate, authorize, deleteUserById);
 
-userRouter.post("/users/upload-avatar", authenticate, uploadImage('users'), uploadAvatar)
+userRouter.post("/upload-avatar", authenticate, uploadImage('users'), uploadAvatar)
 
 export { userRouter };

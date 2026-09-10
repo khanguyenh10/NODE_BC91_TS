@@ -8,3 +8,7 @@ Backend using nodejs
 
 ## Deploy với vercel
 https://viblo.asia/p/auto-deploy-nodejs-app-using-vercel-EbNVQx5oLvR
+
+
+# Kết nối database online Aiven
+# Host free online render

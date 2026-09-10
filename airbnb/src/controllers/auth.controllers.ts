@@ -47,7 +47,7 @@ const login = async (req: Request<{}, {}, LoginReq>, res: Response<ApiRes<any>>)
         if (user) {
             const isAuth = await bcrypt.compare(password, user.password);
             if (isAuth) {
-                const token = jwt.sign({ email: user.email, type: user.role }, process.env.SECRET_KEY as string, { expiresIn: 60 * 5 }) // 5 phút
+                const token = jwt.sign({ email: user.email, type: user.role }, process.env.SECRECT_KEY as string, { expiresIn: 60 * 5 }) // 5 phút
                 const userResponse = {
                     user: { ...user },
                     token
@@ -60,6 +60,7 @@ const login = async (req: Request<{}, {}, LoginReq>, res: Response<ApiRes<any>>)
             ResponseHandler.error(res, 'User hasnot registered', 400);
         }
     } catch (error) {
+        console.log("error", error)
         return ResponseHandler.error(res, error, 500);
     }
 }

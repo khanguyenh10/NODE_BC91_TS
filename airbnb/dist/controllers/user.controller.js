@@ -96,34 +96,28 @@ const createUser = async (req, res) => {
 exports.createUser = createUser;
 const updateUserById = async (req, res) => {
     const { id } = req.params;
-    const { name = '', email = '', password = '', phone = "", gender = true, role = '', birthday = '' } = req.body;
-    console.log("sasasas");
-    // try {
-    //     const updateUser = await User.findOne({ where: { id } })
-    //     if (updateUser) {
-    //         //tạo password mã hóa
-    //         if (!isPassword(password)) {
-    //             return ResponseHandler.error(res, 'Password >= 6 characters , including uppercase, lowercase, number', 400);
-    //         }
-    //         const salt = bcrypt.genSaltSync(10);
-    //         const hashPassword = bcrypt.hashSync(password, salt);
-    //         updateUser.set({
-    //             name: name,
-    //             email: email,
-    //             password: password ? hashPassword : updateUser.password,
-    //             phone: phone,
-    //             gender: toBoolean(gender),
-    //             role: role ? role : updateUser.role,
-    //             birthday: new Date(birthday)
-    //         })
-    //         await updateUser.save();
-    //         return ResponseHandler.success(res, toUserResponseDTo(updateUser), 200);
-    //     } else {
-    //         return ResponseHandler.error(res, null, 404);
-    //     }
-    // } catch (error) {
-    //     return ResponseHandler.error(res, error, 500);
-    // }
+    const { name = '', email = '', phone = "", gender = true, role = '', birthday = '' } = req.body;
+    try {
+        const updateUser = await user_1.default.findOne({ where: { id } });
+        if (updateUser) {
+            updateUser.set({
+                name: name,
+                email: email,
+                phone: phone,
+                gender: (0, text_helper_1.toBoolean)(gender),
+                role: role ? role : updateUser?.dataValues.role,
+                birthday: new Date(birthday)
+            });
+            await updateUser.save();
+            return handler_helper_1.ResponseHandler.success(res, (0, mapper_helper_1.toUserResponseDTo)(updateUser), 200);
+        }
+        else {
+            return handler_helper_1.ResponseHandler.error(res, null, 404);
+        }
+    }
+    catch (error) {
+        return handler_helper_1.ResponseHandler.error(res, error, 500);
+    }
 };
 exports.updateUserById = updateUserById;
 const deleteUserById = async (req, res) => {

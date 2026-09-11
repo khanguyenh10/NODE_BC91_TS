@@ -18,4 +18,4 @@ roomRouter.get("/:id", room_controller_1.getRoomDetailById);
 roomRouter.post("/", authenticate_1.authenticate, authorize_1.authorize, room_controller_1.createRoom);
 roomRouter.put("/:id", authenticate_1.authenticate, authorize_1.authorize, room_controller_1.updateRoomById);
 roomRouter.delete("/:id", authenticate_1.authenticate, authorize_1.authorize, room_controller_1.deleteRoomById);
-roomRouter.post("/upload-hinh-phongthue", authenticate_1.authenticate, authorize_1.authorize, (0, upload_image_1.uploadImage)('locations'), room_controller_1.uploadPhotoRoomById);
+roomRouter.post("/upload-hinh-phong", authenticate_1.authenticate, authorize_1.authorize, (0, upload_image_1.uploadImage)('locations'), room_controller_1.uploadPhotoRoomById);

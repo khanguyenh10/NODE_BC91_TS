@@ -23,6 +23,6 @@ roomRouter.put("/:id", authenticate, authorize, updateRoomById);
 
 roomRouter.delete("/:id", authenticate, authorize, deleteRoomById);
 
-roomRouter.post("/upload-hinh-phongthue", authenticate, authorize, uploadImage('locations'), uploadPhotoRoomById)
+roomRouter.post("/upload-hinh-phong", authenticate, authorize, uploadImage('locations'), uploadPhotoRoomById)
 
 export { roomRouter };

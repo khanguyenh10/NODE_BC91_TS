@@ -45,10 +45,11 @@ const login = async (req, res) => {
     try {
         // kiểm tra email có tồn tại ko
         const user = await user_1.default.findOne({ where: { email }, raw: true });
+        console.log(user, email, password);
         if (user) {
             const isAuth = await bcryptjs_1.default.compare(password, user.password);
             if (isAuth) {
-                const token = jsonwebtoken_1.default.sign({ email: user.email, type: user.role }, process.env.SECRET_KEY, { expiresIn: 60 * 5 }); // 5 phút
+                const token = jsonwebtoken_1.default.sign({ email: user.email, type: user.role }, process.env.SECRECT_KEY, { expiresIn: 60 * 5 }); // 5 phút
                 const userResponse = {
                     user: { ...user },
                     token
@@ -64,6 +65,7 @@ const login = async (req, res) => {
         }
     }
     catch (error) {
+        console.log("error", error);
         return handler_helper_1.ResponseHandler.error(res, error, 500);
     }
 };

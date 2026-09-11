@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadImage = void 0;
-// import { mkdirp } from "mkdirp"
+const mkdirp_1 = require("mkdirp");
 const multer_1 = __importDefault(require("multer"));
 const uploadImage = (type) => {
-    // const makeDirAuto = mkdirp.sync(`./public/images/${type}`);
+    const makeDirAuto = mkdirp_1.mkdirp.sync(`./public/images/${type}`);
     //1. tạo nơi lưu trữ và định dạng lại file name
     const storage = multer_1.default.diskStorage({
         destination: (req, file, cb) => {

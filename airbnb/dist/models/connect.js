@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sequelize = void 0;
 const sequelize_1 = require("sequelize");
 const dotenv_1 = __importDefault(require("dotenv"));
+const mysql2_1 = __importDefault(require("mysql2"));
+console.log(typeof mysql2_1.default);
 dotenv_1.default.config();
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config')[env];

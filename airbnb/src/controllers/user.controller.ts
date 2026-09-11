@@ -88,24 +88,16 @@ const createUser = async (req: Request<{}, {}, RegisterReq>, res: Response<ApiRe
 }
 const updateUserById = async (req: Request<{ id: string }, {}, UpdateUserReq>, res: Response<ApiRes<any>>) => {
     const { id } = req.params;
-    const { name = '', email = '', password = '', phone = "", gender = true, role = '', birthday = '' } = req.body;
+    const { name = '', email = '', phone = "", gender = true, role = '', birthday = '' } = req.body;
     try {
-        const updateUser = await User.findOne({ where: { id } })
+        const updateUser = await User.findOne({ where: { id } });
         if (updateUser) {
-            //tạo password mã hóa
-            if (!isPassword(password)) {
-                return ResponseHandler.error(res, 'Password >= 6 characters , including uppercase, lowercase, number', 400);
-            }
-            const salt = bcrypt.genSaltSync(10);
-            const hashPassword = bcrypt.hashSync(password, salt);
-
             updateUser.set({
                 name: name,
                 email: email,
-                password: hashPassword,
                 phone: phone,
                 gender: toBoolean(gender),
-                role: role,
+                role: role ? role : updateUser?.dataValues.role,
                 birthday: new Date(birthday)
             })
             await updateUser.save();

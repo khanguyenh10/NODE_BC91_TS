@@ -47,7 +47,7 @@ const login = async (req: Request<{}, {}, LoginReq>, res: Response<ApiRes<any>>)
         if (user) {
             const isAuth = await bcrypt.compare(password, user.password);
             if (isAuth) {
-                const token = jwt.sign({ email: user.email, type: user.role }, process.env.SECRET_KEY as string, { expiresIn: 60 * 5 }) // 5 phút
+                const token = jwt.sign({ email: user.email, type: user.role }, process.env.SECRET_KEY as string, { expiresIn: "1h" })
                 const userResponse = {
                     user: { ...user },
                     token

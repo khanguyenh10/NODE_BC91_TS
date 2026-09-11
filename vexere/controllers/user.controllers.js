@@ -32,7 +32,7 @@ const login = async (req, res) => {
             //b2:kiểm tra mật khẩu có đúng hay ko
             const isAuth = await bcrypt.compare(password, user.password);
             if (isAuth) {
-                const token = jwt.sign({ email: user.email, type: user.type }, "kha-257-@", { expiresIn: 60 * 10 }); // 2 phút
+                const token = jwt.sign({ email: user.email, type: user.type }, "kha-257-@", { expiresIn: 60 * 60 }); // 2 phút
                 return res.status(200).send({ message: 'Đăng nhập thành công', token });
             } else {
                 return res.status(500).send({ message: 'Email và mật khẩu không đúng' })

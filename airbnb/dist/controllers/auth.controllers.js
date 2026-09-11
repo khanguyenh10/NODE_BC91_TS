@@ -49,7 +49,7 @@ const login = async (req, res) => {
         if (user) {
             const isAuth = await bcryptjs_1.default.compare(password, user.password);
             if (isAuth) {
-                const token = jsonwebtoken_1.default.sign({ email: user.email, type: user.role }, process.env.SECRET_KEY, { expiresIn: 60 * 5 }); // 5 phút
+                const token = jsonwebtoken_1.default.sign({ email: user.email, type: user.role }, process.env.SECRET_KEY, { expiresIn: "1h" });
                 const userResponse = {
                     user: { ...user },
                     token

@@ -16,6 +16,6 @@ router.use("/dat-phong", room_order_routers_1.roomOrderRouter);
 router.use("/binh-luan", comment_routers_1.commentRouter);
 router.use("/vi-tri", location_routers_1.locationRouter);
 router.use("/users", user_routers_1.userRouter);
-router.use('/signup', auth_controllers_1.register);
-router.use('/signin', auth_controllers_1.login);
+router.use('/auth/signup', auth_controllers_1.register);
+router.use('/auth/signin', auth_controllers_1.login);
 exports.default = router;

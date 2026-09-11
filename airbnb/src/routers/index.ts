@@ -13,8 +13,8 @@ router.use("/dat-phong", roomOrderRouter);
 router.use("/binh-luan", commentRouter);
 router.use("/vi-tri", locationRouter);
 router.use("/users", userRouter);
-router.use('/signup', register);
-router.use('/signin', login);
+router.use('/auth/signup', register);
+router.use('/auth/signin', login);
 
 
 export default router;
